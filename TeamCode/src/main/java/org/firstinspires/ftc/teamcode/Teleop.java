@@ -22,14 +22,11 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSegment;
 
 
-@TeleOp(name = "Teleop ArmV1", group = "TeleOp")
+@TeleOp(name = "Saman Bot", group = "TeleOp")
 public class Teleop extends LinearOpMode {
     //Claw
     ServoImplEx claw1;
     ServoImplEx claw2;
-
-    ServoImplEx hang;
-
 
     ServoImplEx PlaneLauncher;
 
@@ -40,8 +37,6 @@ public class Teleop extends LinearOpMode {
     //Arm
     DcMotorEx armMotor1;
     DcMotorEx armMotor2;
-
-    DcMotorEx hang_m;
 
     Gamepad currentGamepad2 = new Gamepad();
     Gamepad previousGamepad2 = new Gamepad();
@@ -64,15 +59,13 @@ public class Teleop extends LinearOpMode {
         //Claw
         claw1 = hardwareMap.get(ServoImplEx.class, "claw1");
         claw2 = hardwareMap.get(ServoImplEx.class, "claw2");
-        hang = hardwareMap.get(ServoImplEx.class, "hang");
-        hang.setPwmRange(new PwmControl.PwmRange(500,2500));
+
         claw1.setPwmRange(new PwmControl.PwmRange(500,2500));
         claw2.setPwmRange(new PwmControl.PwmRange(500,2500));
 
         //Arm
         armMotor1 = hardwareMap.get(DcMotorEx.class, "arm1");
         armMotor2 = hardwareMap.get(DcMotorEx.class, "arm2");
-        hang_m = hardwareMap.get(DcMotorEx.class, "winch");
 
         //PlaneLauncher
 
@@ -96,7 +89,7 @@ public class Teleop extends LinearOpMode {
                 previousGamepad2.copy(currentGamepad2);
                 currentGamepad2.copy(gamepad2);
 
-                throw new RobotCoreException("kill yourself (gamepad 2)");
+                throw new RobotCoreException(" (gamepad 2)");
             }
             catch (RobotCoreException f)
             {
@@ -108,7 +101,7 @@ public class Teleop extends LinearOpMode {
                 previousGamepad1.copy(currentGamepad1);
                 currentGamepad1.copy(gamepad1);
 
-                throw new RobotCoreException("kill yourself (gamepad 1)");
+                throw new RobotCoreException(" (gamepad 1)");
             }
             catch (RobotCoreException f)
             {
@@ -190,34 +183,6 @@ public class Teleop extends LinearOpMode {
                 armMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
 
-
-
-
-
-
-            //Winch
-            double x = -gamepad2.left_stick_y;
-            hang_m.setPower(x/2);
-
-
-
-            if (gamepad2.dpad_up) {
-                hang.setPosition(0.64);
-            }
-
-            if (gamepad2.dpad_down) {
-                hang.setPosition(0.20);
-            }
-
-            double pos = hang.getPosition();
-
-            if (gamepad2.dpad_left) {
-                hang.setPosition((pos + 0.01));
-            }
-
-            if (gamepad2.dpad_right) {
-                hang.setPosition((pos - 0.01));
-            }
 
 
 
